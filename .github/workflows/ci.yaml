@@ -30,8 +30,14 @@ jobs:
         
       - name: Build
         run: make clean build package
+        
+      - name: tar
+        run: |
+          cd dist
+          tar -czvf alfred-workflow-encode-decode.tar.gz alfred-workflow-encode-decode-*.alfredworkflow
+          cd ..
 
       - uses: actions/upload-artifact@v2
         with:
-          name: alfred-workflow-encode-decode.alfredworkflow
-          path: ./dist/alfred-workflow-encode-decode-*.alfredworkflow
+          name: alfred-workflow-encode-decode.tar.gz
+          path: ./dist/alfred-workflow-encode-decode.tar.gz
