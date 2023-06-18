@@ -86,3 +86,16 @@ class Test(TestCase):
 
         res = encode_decode.decode_unicode('\\u4f60\\u597d')
         self.assertEqual(res, '你好')
+
+    def test_encode_timestamp(self):
+        res = encode_decode.encode_timestamp('2022-01-01 01:01:01')
+        self.assertEqual(res, '1640970061')
+
+        res = encode_decode.encode_timestamp('2022-01-01 01:02')
+        self.assertEqual(res, '1640970120')
+
+        res = encode_decode.encode_timestamp('2022-01-02')
+        self.assertEqual(res, '1641052800')
+
+        res = encode_decode.encode_timestamp('abc')
+        self.assertEqual(res, '')

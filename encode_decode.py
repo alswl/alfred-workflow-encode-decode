@@ -8,6 +8,7 @@ import json
 import os
 import re
 import socket
+import time
 import urllib.error
 import urllib.request
 from distutils.version import LooseVersion
@@ -102,6 +103,26 @@ def encode_unicode(text: str) -> str:
     return res
 
 
+def _encode_timestamp(text: str, _format: str) -> str:
+    try:
+        return str(int(time.mktime(time.strptime(text, _format))))
+    except Exception:
+        return ''
+
+
+def encode_timestamp(text: str) -> str:
+    if text == '' or text == 'now' or text == 'n':
+        text = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+    if text == 'today' or text == 't':
+        text = time.strftime('%Y-%m-%d', time.localtime())
+
+    for _format in ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d']:
+        res = _encode_timestamp(text, _format)
+        if res != '':
+            return res
+    return ''
+
+
 def decode_url(text: str) -> str:
     try:
         return urllib.parse.unquote(text)
@@ -138,6 +159,13 @@ def decode_unicode(text: str) -> str:
         return ''
 
 
+def decode_timestamp(text: str) -> str:
+    try:
+        return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(text)))
+    except Exception:
+        return ''
+
+
 def encode(text: str):
     wf = Workflow()
     text_url = encode_url(text)
@@ -145,12 +173,15 @@ def encode(text: str):
     text_base64 = encode_base64(text)
     text_hex = encode_hex(text)
     text_unicode = encode_unicode(text)
+    text_timestamp = encode_timestamp(text)
 
     wf.add_item(title=text_url, arg=text_url, subtitle='URL encoded', valid=True)
     wf.add_item(title=text_html, arg=text_html, subtitle='HTML encoded', valid=True)
     wf.add_item(title=text_base64, arg=text_base64, subtitle='base64 encoded', valid=True)
     wf.add_item(title=text_hex, arg=text_hex, subtitle='hex encoded', valid=True)
     wf.add_item(title=text_unicode, arg=text_unicode, subtitle='unicode encoded', valid=True)
+    if text_timestamp != '':
+        wf.add_item(title=text_timestamp, arg=text_timestamp, subtitle='timestamp encoded', valid=True)
 
     wf.send_feedback()
 
@@ -162,6 +193,7 @@ def decode(text: str):
     encoded_base64 = decode_base64(text)
     encoded_hex = decode_hex(text)
     encoded_unicode = decode_unicode(text)
+    encoded_timestamp = decode_timestamp(text)
 
     if encoded_url != '' and encoded_url != text:
         wf.add_item(title=encoded_url, arg=encoded_url, subtitle='URL decoded', valid=True)
@@ -173,6 +205,9 @@ def decode(text: str):
         wf.add_item(title=encoded_hex, arg=encoded_hex, subtitle='hex decoded', valid=True)
     if encoded_unicode != '' and encoded_unicode != text:
         wf.add_item(title=encoded_unicode, arg=encoded_unicode, subtitle='unicode decoded', valid=True)
+    if encoded_timestamp != '' and encoded_timestamp != text:
+        wf.add_item(title=encoded_timestamp, arg=encoded_timestamp, subtitle='timestamp decoded', valid=True)
+
     wf.send_feedback()
 
 
