@@ -2,7 +2,8 @@
 # This script is used to bump the version of the operator.
 # It uses semtag to bump the version.
 
-cd "$(dirname "$0")" || exit
+# cd root of the repo
+cd "$(dirname "$0")/.."
 
 set -e
 

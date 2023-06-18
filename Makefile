@@ -37,4 +37,4 @@ BUMP_STAGE=$(DEFAULT_BUMP_STAGE)
 BUMP_SCOPE=$(DEFAULT_BUMP_SCOPE)
 BUMP_DRY_RUN=$(DEFAULT_BUMP_DRY_RUN)
 bump: check-git-clean
-	bash ./hack/bump.sh ${BUMP_STAGE} ${BUMP_SCOPE} ${BUMP_DRY_RUN}
+	(bash ./hack/bump.sh ${BUMP_STAGE} ${BUMP_SCOPE} ${BUMP_DRY_RUN})
