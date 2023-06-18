@@ -1,7 +1,11 @@
 # coding=utf-8
+import os
 from unittest import TestCase
 
 import encode_decode
+
+# force timezone to Asia/Shanghai when running tests
+os.environ['TZ'] = 'Asia/Shanghai'
 
 
 class Test(TestCase):
