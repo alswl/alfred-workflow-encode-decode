@@ -18,9 +18,15 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.9
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
 
       - name: Unit tests
         run: make test
+      
+      - name: install gnu-sed
+        run: brew install gnu-sed
         
       - name: Build
         run: make clean build package
