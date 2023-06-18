@@ -30,3 +30,8 @@ jobs:
         
       - name: Build
         run: make clean build package
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: alfred-workflow-encode-decode.alfredworkflow
+          path: ./dist/alfred-workflow-encode-decode-*.alfredworkflow
