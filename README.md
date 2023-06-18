@@ -4,7 +4,9 @@ alfred-workflow-encode-decode is a workflow for Alfred 3 / 4 / 5, which can enco
 
 It was inspired by [willfarrell/alfred-encode-decode-workflow: Encoding and decoding a string into multiple variations.](https://github.com/willfarrell/alfred-encode-decode-workflow/tree/master).
 
-Why another one? Because `willfarrell/alfred-encode-decode-workflow` required php@7, and macOS removed php@7 now.
+**Why another one**
+
+Because `willfarrell/alfred-encode-decode-workflow` required `php@7`, and macOS removed php@7 now.
 
 ## Install
 
@@ -41,6 +43,7 @@ make build package
 
 - [willfarrell/alfred-encode-decode-workflow: Encoding and decoding a string into multiple variations.](https://github.com/willfarrell/alfred-encode-decode-workflow)
 - [alswl/shanbay-alfred2: 扇贝词典 alfred2/3/4 workflow, 支持查询和添加单词到自己词库。update：由于扇贝关闭开放 API，本项目已经不可正常工作。](https://github.com/alswl/shanbay-alfred2)
+- [harrtho/alfred-pyworkflow: Full-featured library for writing Alfred 4 & 5 workflows](https://github.com/harrtho/alfred-pyworkflow)
 
 ## TODO
 
