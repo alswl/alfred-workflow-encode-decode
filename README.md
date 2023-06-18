@@ -15,7 +15,16 @@ TODO
 ## Snapshots
 
 
-## Package
+## Development
+
+Install dependencies:
+
+```
+pip install --target=. Alfred-PyWorkflow
+rm -rf Alfred_PyWorkflow-*.dist-info
+```
+
+**package**:
 
 ```
 make

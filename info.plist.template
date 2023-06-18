@@ -93,7 +93,7 @@
 				<key>runningsubtext</key>
 				<string>Encoding "{query}"</string>
 				<key>script</key>
-				<string>python3 encode.python '{query}'</string>
+				<string>python3 encode_decode.py --encode '{query}'</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -161,7 +161,7 @@
 				<key>runningsubtext</key>
 				<string>Decoding "{query}"</string>
 				<key>script</key>
-				<string>python3 decode.py "$(./normalise -form NFC "{query}")"</string>
+				<string>python3 encode_decode.py --decode "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
