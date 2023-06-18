@@ -175,11 +175,16 @@ def encode(text: str):
     text_unicode = encode_unicode(text)
     text_timestamp = encode_timestamp(text)
 
-    wf.add_item(title=text_url, arg=text_url, subtitle='URL encoded', valid=True)
-    wf.add_item(title=text_html, arg=text_html, subtitle='HTML encoded', valid=True)
-    wf.add_item(title=text_base64, arg=text_base64, subtitle='base64 encoded', valid=True)
-    wf.add_item(title=text_hex, arg=text_hex, subtitle='hex encoded', valid=True)
-    wf.add_item(title=text_unicode, arg=text_unicode, subtitle='unicode encoded', valid=True)
+    if text != text_url:
+        wf.add_item(title=text_url, arg=text_url, subtitle='URL encoded', valid=True)
+    if text != text_html:
+        wf.add_item(title=text_html, arg=text_html, subtitle='HTML encoded', valid=True)
+    if text != text_base64:
+        wf.add_item(title=text_base64, arg=text_base64, subtitle='base64 encoded', valid=True)
+    if text != text_hex:
+        wf.add_item(title=text_hex, arg=text_hex, subtitle='hex encoded', valid=True)
+    if text != text_unicode:
+        wf.add_item(title=text_unicode, arg=text_unicode, subtitle='unicode encoded', valid=True)
     if text_timestamp != '':
         wf.add_item(title=text_timestamp, arg=text_timestamp, subtitle='timestamp encoded', valid=True)
 
