@@ -94,16 +94,25 @@ def encode_base64(text: str) -> str:
 
 
 def decode_url(text: str) -> str:
-    return urllib.parse.unquote(text)
+    try:
+        return urllib.parse.unquote(text)
+    except Exception:
+        return ''
 
 
 def decode_html(text: str) -> str:
-    return html.unescape(text)
+    try:
+        return html.unescape(text)
+    except Exception:
+        return ''
 
 
 def decode_base64(text: str) -> str:
-    bs = base64.b64decode(text.encode('utf-8'))
-    return bs.decode('utf-8')
+    try:
+        bs = base64.b64decode(text.encode('utf-8'))
+        return bs.decode('utf-8')
+    except Exception:
+        return ''
 
 
 def encode(text: str):
@@ -122,9 +131,12 @@ def decode(text: str):
     decoded_url = decode_url(text)
     decoded_html = decode_html(text)
     decoded_based64 = decode_base64(text)
-    wf.add_item(title=decoded_url, arg=decoded_url, subtitle='URL decoded', valid=True)
-    wf.add_item(title=decoded_html, arg=decoded_html, subtitle='HTML decoded', valid=True)
-    wf.add_item(title=decoded_based64, arg=decoded_based64, subtitle='base64 decoded', valid=True)
+    if decoded_url != '':
+        wf.add_item(title=decoded_url, arg=decoded_url, subtitle='URL decoded', valid=True)
+    if decoded_html != '':
+        wf.add_item(title=decoded_html, arg=decoded_html, subtitle='HTML decoded', valid=True)
+    if decoded_based64 != '':
+        wf.add_item(title=decoded_based64, arg=decoded_based64, subtitle='base64 decoded', valid=True)
     wf.send_feedback()
 
 
