@@ -18,3 +18,6 @@ package:
 
 clean:
 	rm -rf dist info.plist
+
+test:
+	python3 -m unittest *_test.py
