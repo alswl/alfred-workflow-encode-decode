@@ -6,6 +6,7 @@ import base64
 import html
 import json
 import os
+import re
 import socket
 import urllib.error
 import urllib.request
@@ -16,7 +17,6 @@ from workflow import Workflow
 
 TOKEN_FILE = os.path.abspath('token')
 ALFRED_WORD_AUDIO_MP3_FILE = '/tmp/alfred_word_audio.mp3'
-
 
 VERSION_DOMAIN = 'alfred-workflow-encode-decode-version.alswl.com'
 
@@ -93,6 +93,15 @@ def encode_base64(text: str) -> str:
     return bs.decode('utf-8')
 
 
+def encode_hex(text: str) -> str:
+    return text.encode('utf-8').hex()
+
+
+def encode_unicode(text: str) -> str:
+    res = (re.sub('.', lambda x: r'\u%04x' % ord(x.group()), text))
+    return res
+
+
 def decode_url(text: str) -> str:
     try:
         return urllib.parse.unquote(text)
@@ -115,28 +124,55 @@ def decode_base64(text: str) -> str:
         return ''
 
 
+def decode_hex(text: str) -> str:
+    try:
+        return bytes.fromhex(text).decode('utf-8')
+    except Exception:
+        return ''
+
+
+def decode_unicode(text: str) -> str:
+    try:
+        return text.encode('utf-8').decode('unicode_escape')
+    except Exception:
+        return ''
+
+
 def encode(text: str):
     wf = Workflow()
-    encoded_url = encode_url(text)
-    encoded_html = encode_html(text)
-    encoded_based64 = encode_base64(text)
-    wf.add_item(title=encoded_url, arg=encoded_url, subtitle='URL encoded', valid=True)
-    wf.add_item(title=encoded_html, arg=encoded_html, subtitle='HTML encoded', valid=True)
-    wf.add_item(title=encoded_based64, arg=encoded_based64, subtitle='base64 encoded', valid=True)
+    text_url = encode_url(text)
+    text_html = encode_html(text)
+    text_base64 = encode_base64(text)
+    text_hex = encode_hex(text)
+    text_unicode = encode_unicode(text)
+
+    wf.add_item(title=text_url, arg=text_url, subtitle='URL encoded', valid=True)
+    wf.add_item(title=text_html, arg=text_html, subtitle='HTML encoded', valid=True)
+    wf.add_item(title=text_base64, arg=text_base64, subtitle='base64 encoded', valid=True)
+    wf.add_item(title=text_hex, arg=text_hex, subtitle='hex encoded', valid=True)
+    wf.add_item(title=text_unicode, arg=text_unicode, subtitle='unicode encoded', valid=True)
+
     wf.send_feedback()
 
 
 def decode(text: str):
     wf = Workflow()
-    decoded_url = decode_url(text)
-    decoded_html = decode_html(text)
-    decoded_based64 = decode_base64(text)
-    if decoded_url != '':
-        wf.add_item(title=decoded_url, arg=decoded_url, subtitle='URL decoded', valid=True)
-    if decoded_html != '':
-        wf.add_item(title=decoded_html, arg=decoded_html, subtitle='HTML decoded', valid=True)
-    if decoded_based64 != '':
-        wf.add_item(title=decoded_based64, arg=decoded_based64, subtitle='base64 decoded', valid=True)
+    encoded_url = decode_url(text)
+    encoded_html = decode_html(text)
+    encoded_base64 = decode_base64(text)
+    encoded_hex = decode_hex(text)
+    encoded_unicode = decode_unicode(text)
+
+    if encoded_url != '' and encoded_url != text:
+        wf.add_item(title=encoded_url, arg=encoded_url, subtitle='URL decoded', valid=True)
+    if encoded_html != '' and encoded_html != text:
+        wf.add_item(title=encoded_html, arg=encoded_html, subtitle='HTML decoded', valid=True)
+    if encoded_base64 != '' and encoded_base64 != text:
+        wf.add_item(title=encoded_base64, arg=encoded_base64, subtitle='base64 decoded', valid=True)
+    if encoded_hex != '' and encoded_hex != text:
+        wf.add_item(title=encoded_hex, arg=encoded_hex, subtitle='hex decoded', valid=True)
+    if encoded_unicode != '' and encoded_unicode != text:
+        wf.add_item(title=encoded_unicode, arg=encoded_unicode, subtitle='unicode decoded', valid=True)
     wf.send_feedback()
 
 

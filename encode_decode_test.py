@@ -46,3 +46,43 @@ class Test(TestCase):
 
         res = encode_decode.decode_base64('Jg==')
         self.assertEqual(res, '&')
+
+    def test_encode_hex(self):
+        res = encode_decode.encode_hex('abc')
+        self.assertEqual(res, '616263')
+
+        res = encode_decode.encode_hex('&')
+        self.assertEqual(res, '26')
+
+        res = encode_decode.encode_hex('你好')
+        self.assertEqual(res, 'e4bda0e5a5bd')
+
+    def test_decode_hex(self):
+        res = encode_decode.decode_hex('616263')
+        self.assertEqual(res, 'abc')
+
+        res = encode_decode.decode_hex('26')
+        self.assertEqual(res, '&')
+
+        res = encode_decode.decode_hex('e4bda0e5a5bd')
+        self.assertEqual(res, '你好')
+
+    def test_encode_unicode(self):
+        res = encode_decode.encode_unicode('abc')
+        self.assertEqual(res, '\\u0061\\u0062\\u0063')
+
+        res = encode_decode.encode_unicode('&')
+        self.assertEqual(res, '\\u0026')
+
+        res = encode_decode.encode_unicode('你好')
+        self.assertEqual(res, '\\u4f60\\u597d')
+
+    def test_decode_unicode(self):
+        res = encode_decode.decode_unicode('\\u0061\\u0062\\u0063')
+        self.assertEqual(res, 'abc')
+
+        res = encode_decode.decode_unicode('\\u0026')
+        self.assertEqual(res, '&')
+
+        res = encode_decode.decode_unicode('\\u4f60\\u597d')
+        self.assertEqual(res, '你好')
