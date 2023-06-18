@@ -18,7 +18,9 @@ Trigger your Alfred, and input `encode` or `decode`, and input your string.
 
 ### Snapshots
 
-TODO
+![encode](./_assets/encode.png)
+
+![decode](./_assets/decode.png)
 
 ## Development
 
@@ -42,7 +44,7 @@ make build package
 
 ## TODO
 
-- [ ] snapshots
+- [x] snapshots
 - [ ] version management
 
 
