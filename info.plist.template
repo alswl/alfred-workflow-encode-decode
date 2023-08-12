@@ -5,7 +5,7 @@
 	<key>bundleid</key>
 	<string>com.alswl.alfred-workflow.encode-decode</string>
 	<key>category</key>
-	<string>Tools</string>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>807BFA1D-EAEC-4DB7-B04E-6371C601A9E7</key>
@@ -79,7 +79,7 @@
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>98</integer>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>encode</string>
 				<key>queuedelaycustom</key>
@@ -93,7 +93,7 @@
 				<key>runningsubtext</key>
 				<string>Encoding "{query}"</string>
 				<key>script</key>
-				<string>python3 encode_decode.py --encode '{query}'</string>
+				<string>python3 encode_decode.py --encode "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
