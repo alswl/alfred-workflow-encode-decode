@@ -21,16 +21,22 @@ build:
 	gsed -i -e "s/\$${VERSION}/${version}/" info.plist
 
 
+version=$(shell cat VERSION | gsed 's/\-dev//')
+build-release: build
+
 package:
 	mkdir -p dist
 	zip -r dist/${PROJECT}-${version}-${git_hash}.alfredworkflow . -x \*.git\*  -x .idea\* -x token -x tags -x dist\* -x \*.swp -x info.plist.template -x \*.DS_Store\* -x \*.pyc\* -x \*snapshot\*
 
+version=$(shell cat VERSION | gsed 's/\-dev//')
+package-release: package
+
 clean:
 	rm -rf dist info.plist
 
+
 test:
 	python3 -m unittest *_test.py
-
 
 
 BUMP_STAGE=$(DEFAULT_BUMP_STAGE)
